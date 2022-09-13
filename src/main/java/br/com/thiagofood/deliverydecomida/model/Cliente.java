@@ -5,6 +5,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.LocalDateTime.*;
 
@@ -36,12 +38,33 @@ public class Cliente {
     @UpdateTimestamp
     private LocalDateTime modificadoEm;
 
+    @OneToMany(mappedBy = "cliente",cascade = {CascadeType.REMOVE})
+    private List<Endereco> enderecos = new ArrayList<>();
+
     public Cliente(String nome, String email, String celular, String cpf) {
         this.nome = nome;
         this.email = email;
         this.celular = celular;
         this.cpf = cpf;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+
 
     /**
      * @Deprecated: Uso do Hibernate
