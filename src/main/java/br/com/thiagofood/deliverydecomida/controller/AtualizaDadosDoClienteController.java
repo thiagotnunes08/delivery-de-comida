@@ -28,14 +28,15 @@ public class AtualizaDadosDoClienteController {
         Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 
-       if (repository.existsByEmail(request.getEmail())){
-           throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"Email já existente no sistema!");
-       }
+        request.getEmail().ifPresent(possivelEmail -> {
+            if (repository.existsByEmail(request.getEmail())) {
+                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Email já existente no sistema!");
+            }
+        });
 
         cliente.atualiza(request);
 
         return ResponseEntity.noContent().build();
-
 
     }
 }

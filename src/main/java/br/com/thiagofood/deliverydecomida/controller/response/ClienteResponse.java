@@ -14,7 +14,7 @@ public class ClienteResponse {
     private String email;
     private String celular;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<EnderecoResponse> enderecos = new ArrayList<>();
 
     public ClienteResponse(Cliente cliente, Boolean deveListarEndereco) {
