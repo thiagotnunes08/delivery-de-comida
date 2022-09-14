@@ -2,6 +2,7 @@ package br.com.thiagofood.deliverydecomida.controller.response;
 
 import br.com.thiagofood.deliverydecomida.model.Cliente;
 import br.com.thiagofood.deliverydecomida.model.Endereco;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class ClienteResponse {
     private String nome;
     private String email;
     private String celular;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<EnderecoResponse> enderecos = new ArrayList<>();
 
     public ClienteResponse(Cliente cliente, Boolean deveListarEndereco) {

@@ -1,6 +1,7 @@
 package br.com.thiagofood.deliverydecomida.model;
 
 
+import br.com.thiagofood.deliverydecomida.controller.request.AtualizaClienteRequest;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -65,7 +66,6 @@ public class Cliente {
     }
 
 
-
     /**
      * @Deprecated: Uso do Hibernate
      */
@@ -77,16 +77,13 @@ public class Cliente {
         return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
+    public void atualiza(AtualizaClienteRequest request) {
+        request.getNome().ifPresent(possivelNome -> this.nome = possivelNome);
+        request.getTelefone().ifPresent(possivelTelefone -> this.celular = possivelTelefone);
+        request.getEmail().ifPresent(possivelEmail -> this.email = possivelEmail);
 
+
+    }
 }

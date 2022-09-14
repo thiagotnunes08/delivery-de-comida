@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/clientes")
@@ -20,16 +22,17 @@ public class AtualizaDadosDoClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> atualiza(@PathVariable Long id, @RequestBody AtualizaClienteRequest request) {
+    @Transactional
+    public ResponseEntity<?> atualiza(@PathVariable Long id, @Valid @RequestBody AtualizaClienteRequest request) {
 
-        Cliente clienteAutalizado = repository.findById(id)
+        Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 
-        request.verificaClienteExistente(repository);
+       if (repository.existsByEmail(request.getEmail())){
+           throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"Email já existente no sistema!");
+       }
 
-        request.atualizaCampos(clienteAutalizado);
-
-        repository.save(clienteAutalizado);
+        cliente.atualiza(request);
 
         return ResponseEntity.noContent().build();
 
