@@ -6,15 +6,26 @@ import br.com.thiagofood.deliverydecomida.repository.ClienteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class NovoEnderecoRequest {
 
+    @NotNull
     private Long dono;
+    @NotBlank
     private String pais;
+    @NotBlank
     private String estado;
+    @NotBlank
     private String cidade;
+    @NotBlank
     private String bairro;
+    @NotBlank
     private String rua;
+    @NotBlank
     private String numero;
+    @NotBlank
     private String cep;
 
     private String complemento;

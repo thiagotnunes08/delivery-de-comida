@@ -19,7 +19,7 @@ public class ConsultarClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> consulta(@PathVariable Long id, @RequestParam(required = false, value = "mostrarEndereco") Boolean deveListarEndereco) {
+    public ResponseEntity<?> consulta(@PathVariable Long id, @RequestParam(required = false) boolean deveListarEndereco) {
 
         Cliente cliente = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
